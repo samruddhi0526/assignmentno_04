@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priority To-Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Centering the content */
+        body {
+            background-color: lightgrey;
+            font-family: Arial, sans-serif;
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+            margin: 0; /* Remove default body margin */
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task {
+            margin-bottom: 15px;
+        }
+
+        .task ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task ul li {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .task ul li.high {
+            background-color: #dc3545;
+        }
+
+        .task ul li.medium {
+            background-color: orangered;
+        }
+
+        .task ul li.low {
+            background-color: #ffc107;
+        }
+
+        /* VioletBlue Button */
+        #addTaskBtn {
+            background-color: #8a2be2; /* VioletBlue */
+            color: white;
+            border: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Full width */
+        }
+
+        #addTaskBtn:hover {
+            background-color: #7a1fdd; /* Darker VioletBlue on hover */
+            transform: scale(1.05); /* Slight scale-up effect on hover */
+        }
+
+        #addTaskBtn:active {
+            background-color: #6a1ab0; /* Even darker on click */
+            transform: scale(1); /* Reset scale on click */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Priority To-Do List</h2>
+        
+        <!-- Input Section -->
+        <div class="mb-4">
+            <input type="text" id="taskInput" class="form-control" placeholder="Enter a new task" />
+            <select id="prioritySelect" class="form-control mt-2">
+                <option value="high">High Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+            <button id="addTaskBtn" class="btn mt-3">Add Task</button>
+        </div>
+
+        <!-- Display To-Do List -->
+        <div id="taskList" class="task">
+            <h4>Your Tasks :</h4>
+            <ul id="taskListUl"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("addTaskBtn").addEventListener("click", function() {
+            let taskInput = document.getElementById("taskInput").value;
+            let prioritySelect = document.getElementById("prioritySelect").value;
+
+            if (taskInput) {
+                let taskList = document.getElementById("taskListUl");
+
+                // Create the new task list item
+                let newTask = document.createElement("li");
+                
+                // Create priority label
+                let priorityLabel = document.createElement("span");
+                priorityLabel.textContent = prioritySelect.charAt(0).toUpperCase() + prioritySelect.slice(1) + " Priority: "; // Capitalize the first letter of the priority
+                priorityLabel.style.fontWeight = 'bold';
+                priorityLabel.style.marginRight = '10px';
+                
+                // Append priority label and task text
+                newTask.appendChild(priorityLabel);
+                newTask.appendChild(document.createTextNode(taskInput));
+                
+                // Add class for task priority color
+                newTask.classList.add(prioritySelect);
+
+                // Append new task to the task list
+                taskList.appendChild(newTask);
+
+                // Clear the input fields
+                document.getElementById("taskInput").value = '';
+                document.getElementById("prioritySelect").value = 'high';
+            } else {
+                alert("Please enter a task.");
+            }
+        });
+    </script>
+</body>
+</html>
